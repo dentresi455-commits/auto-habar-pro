@@ -36,7 +36,7 @@ def keyboard(items):
     k.adjust(2)
     return k.as_markup(resize_keyboard=True)
 
-MAIN=['🚀 Avto xabar','👤 Kabinet','🖼️ Akkauntlarim','💎 Pro tarif','🎁 Bonus','👥 Referal','💡 Yordam']
+MAIN=['➕ Akkaunt qo‘shish','🚀 Avto xabar','👤 Kabinet','🖼️ Akkauntlarim','💎 Pro tarif','🎁 Bonus','👥 Referal','💡 Yordam']
 CONTROL=['▶️ Boshlash','⏹ To‘xtatish','📝 Xabar qo‘shish','📋 Xabarlar','➕ Guruh qo‘shish','👥 Guruhlar','⏱ Interval','📊 Hisobot','🕒 Ish vaqti','🗑 Eski xabarni o‘chirish','🔄 Yangilash','⬅️ Asosiy menyu']
 
 def ensure(uid,ref=None):
@@ -64,8 +64,16 @@ async def start(m:Message):
 
 @dp.message(F.text=='⬅️ Asosiy menyu')
 async def home(m:Message): await m.answer('Asosiy menyu',reply_markup=keyboard(MAIN))
-@dp.message(F.text.in_({'🚀 Avto xabar','🖼️ Akkauntlarim','🔄 Yangilash'}))
+@dp.message(F.text.in_({'🚀 Avto xabar','🔄 Yangilash'}))
 async def panel(m:Message): await overview(m)
+@dp.message(F.text=='🖼️ Akkauntlarim')
+async def accounts(m:Message):
+    await m.answer('🖼️ Akkauntlarim\n\nHozir faqat Telegram Bot API orqali ulangan bot ishlaydi. Shaxsiy akkauntlar uchun xavfsiz alohida ulash xizmati hali mavjud emas.\n\nTasdiqlash kodi yoki ikki bosqichli parolingizni bu chatga yubormang.',reply_markup=keyboard(MAIN))
+
+@dp.message(F.text=='➕ Akkaunt qo‘shish')
+async def account_add(m:Message):
+    await m.answer('🔐 Akkaunt qo‘shish\n\nShaxsiy Telegram akkauntini ulash uchun alohida himoyalangan autentifikatsiya xizmati talab etiladi. Bu bot telefon raqami, Telegram tasdiqlash kodi yoki 2FA parolini qabul qilmaydi.\n\nHozircha ushbu imkoniyat ishga tushirilmagan.',reply_markup=keyboard(MAIN))
+
 @dp.message(F.text=='👤 Kabinet')
 async def cabinet(m:Message):
     uid=m.from_user.id; ensure(uid)
@@ -91,7 +99,7 @@ async def add_chat(m:Message):
     states[m.from_user.id]='add_chat'; await m.answer('Siz va bot administrator bo‘lgan guruh yoki kanalning raqamli chat ID sini yuboring (masalan -100...).')
 @dp.message(F.text=='⏱ Interval')
 async def interval(m:Message):
-    states[m.from_user.id]='interval'; await m.answer('Intervalni daqiqada yuboring: 15, 30, 60 va hokazo (15–10080).')
+    states[m.from_user.id]='interval'; await m.answer('Intervalni daqiqada yuboring: 5, 10, 15, 30, 60 va hokazo (5–10080).')
 @dp.message(F.text=='🕒 Ish vaqti')
 async def work(m:Message):
     states[m.from_user.id]='hours'; await m.answer('Toshkent vaqti bo‘yicha ish soatlarini HH-HH shaklida kiriting (masalan 09-18). 00-24 = doimiy.')
@@ -143,7 +151,7 @@ async def input_handler(m:Message):
     if state=='interval':
         try: n=int(m.text)
         except ValueError: return await m.answer('Butun son kiriting.')
-        if not 15<=n<=10080: return await m.answer('15–10080 oralig‘ida bo‘lishi kerak.')
+        if not 5<=n<=10080: return await m.answer('5–10080 oralig‘ida bo‘lishi kerak.')
         ensure(uid); sql('UPDATE settings SET interval_min=? WHERE owner=?',(n,uid)); return await m.answer(f'⏱ Interval: {n} daqiqa.',reply_markup=keyboard(CONTROL))
     if state=='hours':
         try:
