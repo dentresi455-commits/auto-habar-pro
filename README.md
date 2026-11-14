@@ -1,19 +1,21 @@
-# AUTO HABAR PRO
+# AUTO HABAR PRO v2
 
-Theguyso/telegram-auto-sender loyihasidagi **xabarlarni navbatlash, interval va log** g'oyalaridan foydalanilgan, Bot API asosida qayta yozilgan MVP. Original Telethon akkaunt sessiyalari ishlatilmaydi.
+Telegram Bot API asosida ishlaydigan, ruxsatli guruh va kanallarga xabar yuboruvchi bot.
+
+## Menyular
+- 🚀 Avto xabar: xabarlar, guruhlar, interval, ish vaqti, boshlash/to‘xtatish, eski xabarni o‘chirish, hisobot
+- 👤 Kabinet: virtual balans va statistika
+- 🖼️ Akkauntlarim: bot boshqarayotgan chatlar (shaxsiy Telegram sessiyalari emas)
+- 👥 Referal: shaxsiy havola va ro‘yxatdan o‘tganlar soni
+- 💎 Pro tarif, 🎁 Bonus: hozircha faqat ma'lumot oynasi, to‘lov/bonus ishlamaydi
 
 ## Render
-1. GitHub'da yangi repository yarating va ushbu fayllarni yuklang.
-2. Render > New > Blueprint > repository tanlang.
-3. `BOT_TOKEN` — BotFather'dan **yangilangan** token.
-4. `BASE_URL` — Render bergan `https://...onrender.com` manzil.
-5. `WEBHOOK_SECRET` Render tomonidan generatsiya qilinadi.
-6. Deploy qiling, so'ng Telegram'da /start bosing.
+`BOT_TOKEN`, `BASE_URL`, `WEBHOOK_SECRET` muhit o‘zgaruvchilari talab qilinadi. `BASE_URL=https://auto-habar-pro.onrender.com`.
 
-## Cheklovlar
-- Render free service uxlab qoladi; shu sababli rejalashtirilgan xabarlar kafolatli 24/7 ishlamaydi.
-- SQLite fayli Render'da doimiy disk bo'lmasa deploy/restartda yo'qolishi mumkin.
-- Ishlab chiqarish uchun persistent PostgreSQL va doimiy worker kerak.
-- Xabarlar faqat foydalanuvchi hamda bot administrator bo'lgan chatlarga yuboriladi.
-- Hozircha matnli xabarlar, guruh qo'shish, interval, start/stop va oddiy hisobot ishlangan; media, to'lov, referal keyingi bosqich.
-- Dastur Render'da real sinovdan o'tkazilmagan.
+## Muhim cheklovlar
+- Render Free uxlab qolishi mumkin: doimiy jadval kafolatlanmaydi.
+- SQLite Render ephemeral diskda saqlanadi: restart/deployda ma'lumotlar yo‘qolishi mumkin. Production uchun PostgreSQL kerak.
+- Bot va foydalanuvchi guruh/kanalda administrator bo‘lishi shart.
+- Guruh xabarlarini ommaviy spam sifatida yubormang; faqat ruxsatli chatlardan foydalaning.
+- Xabar o‘chirish Telegram cheklovlariga bog‘liq.
+- Ushbu versiya real Telegram bilan sinovdan o‘tkazilmagan.
